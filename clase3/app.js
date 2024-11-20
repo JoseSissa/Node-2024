@@ -1,12 +1,14 @@
-const express = require('express');
-const crypto = require('node:crypto');
-const MOVIES = require('./movies.json');
-const { validateMovie, validatePartialMovie } = require('./schemas/movies');
+import express, { json } from 'express';
+import { randomUUID } from 'node:crypto';
+import { getJSON } from './utils/utils.js';
+
+import { validateMovie, validatePartialMovie } from './schemas/movies.js';
+const MOVIES = getJSON('../movies.json');
 
 const app = express();
 
 // Middleware para parsear el body de la petición
-app.use(express.json());
+app.use(json());
 
 app.disable('x-powered-by'); // disable express powered by header
 
@@ -55,7 +57,7 @@ app.post('/movies', (req, res) => {
     }
 
     const newMovie = {
-        id: crypto.randomUUID(),
+        id: randomUUID(),
         ...result.data
     }
 

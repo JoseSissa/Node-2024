@@ -1,4 +1,4 @@
-const zod = require('zod');
+import zod from 'zod';
 
 const movieSchema = zod.object({
     title: zod.string({
@@ -20,17 +20,12 @@ const movieSchema = zod.object({
     rate: zod.number().min(0).max(10).default(5),
 });
 
-function validateMovie(object) {
+export function validateMovie(object) {
     return movieSchema.safeParse(object);
 }
 
-function validatePartialMovie(object) {
+export function validatePartialMovie(object) {
     // Con el partial() nos aseguramos de que solo se validan las propiedades que se especifican en el objeto
     // Si el objeto tiene solo una propiedad para validar, la valida e ignora las demás 
     return movieSchema.partial().safeParse(object);
-}
-
-module.exports = {
-    validateMovie,
-    validatePartialMovie
 }
