@@ -1,0 +1,34 @@
+### Recuperamos todas las peliculas
+GET http://localhost:3000/movies
+
+### Recuperamos una pelicula por id
+GET http://localhost:3000/movies/1
+
+### Recuperamos todas las peliculas con un filtro
+GET http://localhost:3000/movies?genre=fantasy
+
+### Crear una pelicula
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "sql": "SELECT * FROM movies",
+    "title": "The godfather",
+    "year": 1975,
+    "director": "Francis Ford Coppola",
+    "duration": 175,
+    "poster": "https://i.ebayimg.com/images/g/4goAAOSwMyBe7hnQ/s-l1200.webp",
+    "genre": [
+        "Crime",
+        "Drama"
+    ],
+    "rate": 9.3
+}
+
+### Actualizar una pelicula (pero sólo una parte de ella)
+PATCH http://localhost:3000/movies/6a360a18-c645-4b47-9a7b-2a71babbf3e0
+Content-Type: application/json
+
+{
+    "year": 2021
+}

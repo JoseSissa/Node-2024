@@ -1,0 +1,14 @@
+# recuperamosla información del pokemon ditton
+GET http://localhost:3000/pokemon/ditton
+
+### Para crear un nuevo pokemon
+POST http://localhost:3000/pokemon HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Ditto",
+    "type": "normal",
+    "moves": [
+        "transform"
+    ]
+}

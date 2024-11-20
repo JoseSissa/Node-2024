@@ -1,0 +1,18 @@
+{
+  "name": "clase2",
+  "version": "1.0.0",
+  "main": "http.js",
+  "scripts": {
+    "dev1": "node --watch http.js",
+    "dev2": "node --watch routing.js",
+    "dev3": "node --watch express.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "4.21.1"
+  }
+}
