@@ -1,11 +1,11 @@
 ### Recuperamos todas las peliculas
 GET http://localhost:3000/movies
 
-### Recuperamos una pelicula por id
-GET http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
-
 ### Recuperamos todas las peliculas con un filtro
 GET http://localhost:3000/movies?genre=fantasy
+
+### Recuperamos una pelicula por id
+GET http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
 
 ### Crear una pelicula
 POST http://localhost:3000/movies
@@ -32,3 +32,7 @@ Content-Type: application/json
 {
     "year": 2021
 }
+
+### Borrar una pelicula pasando su id
+DELETE http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
