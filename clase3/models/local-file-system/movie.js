@@ -1,4 +1,4 @@
-import { getJSON } from "../utils/utils.js";
+import { getJSON } from "../../utils/utils.js";
 import { randomUUID } from "node:crypto";
 
 const MOVIES = getJSON("../movies.json");
