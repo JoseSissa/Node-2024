@@ -48,12 +48,32 @@ export class MovieModel {
     static async getById({ id }) {
         const [movie] = await connection.query(`
             SELECT title, year, director, duration, poster, rate FROM movie 
-            WHERE BIN_TO_UUID(id) = ?;`, [id]
-        );        
+            WHERE BIN_TO_UUID(id) = ?;`,
+            [id]
+        );
+        if (!movie) return [];
         return movie;
     }
 
     static async create({ input }) {
+        const { title, year, director, duration, poster, rate } = input;
+        const [uuidResult] = await connection.query(`SELECT UUID() uuid;`);
+        const [{ uuid }] = uuidResult;
+
+        await connection.query(`
+            INSERT INTO movie (id, title, year, director, duration, poster, rate) VALUES 
+            (UUID_TO_BIN("${uuid}"), ?, ?, ?, ?, ?, ?);`, 
+            [ title, year, director, duration, poster, rate ]
+        );
+
+        const [newMovie] = await connection.query(`
+            SELECT title, year, director, duration, poster, rate FROM movie 
+            WHERE BIN_TO_UUID(id) = ?;`,
+            [uuid]
+        );
+        
+        return newMovie[0];
+        
     }
 
     static async delete({ id }) {

@@ -22,7 +22,7 @@ Content-Type: application/json
         "Crime",
         "Drama"
     ],
-    "rate": 9.3
+    "rate": 5.0
 }
 
 ### Actualizar una pelicula (pero sólo una parte de ella)
