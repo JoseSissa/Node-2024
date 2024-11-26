@@ -1,9 +1,9 @@
 -- Creación de la DB
-DROP DATABASE IF EXISTS moviesdb;
-CREATE DATABASE moviesdb;
+DROP DATABASE IF EXISTS node_movies_db;
+CREATE DATABASE node_movies_db;
 
 -- Usar
-USE moviesdb;
+USE node_movies_db;
 -- Crear la tabla Movies
 
 CREATE TABLE movie(
@@ -73,7 +73,6 @@ INSERT INTO movie_genre (movie_id, genre_id) VALUES
 ((SELECT id FROM movie WHERE title = 'The Lord of the Rings: The Return of the King'),(SELECT id FROM genre WHERE name = 'Action')),
 ((SELECT id FROM movie WHERE title = 'The Lord of the Rings: The Return of the King'),(SELECT id FROM genre WHERE name = 'Adventure')),
 ((SELECT id FROM movie WHERE title = 'The Lord of the Rings: The Return of the King'),(SELECT id FROM genre WHERE name = 'Drama')),
-((SELECT id FROM movie WHERE title = 'The Lord of the Rings: The Return of the King'),(SELECT id FROM genre WHERE name = 'Fantasy')),
 ((SELECT id FROM movie WHERE title = 'The Lion King'),(SELECT id FROM genre WHERE name = 'Animation')),
 ((SELECT id FROM movie WHERE title = 'The Lion King'),(SELECT id FROM genre WHERE name = 'Adventure')),
 ((SELECT id FROM movie WHERE title = 'The Lion King'),(SELECT id FROM genre WHERE name = 'Drama')),
