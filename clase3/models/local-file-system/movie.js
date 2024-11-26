@@ -21,7 +21,7 @@ export class MovieModel {
         return movie;
     }
 
-    static async create(input) {
+    static async create({ input }) {
         // Proceso que debería hacer algo en la DB
         const newMovie = {
             id: randomUUID(),

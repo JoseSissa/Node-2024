@@ -1,4 +1,5 @@
-import { MovieModel } from "../models/movie.js";
+// import { MovieModel } from "../models/local-file-system/movie.js";
+import { MovieModel } from "../models/mysql/movie.js";
 import { validateMovie, validatePartialMovie } from "../schemas/movies.js";
 
 export class MovieController {
@@ -27,7 +28,7 @@ export class MovieController {
                 .json({ error: JSON.parse(result.error.message) });
         }
         // Proceso que debería hacer algo en la DB
-        const newMovie = await MovieModel.create(result.data);
+        const newMovie = await MovieModel.create({ input: result.data});
         res.status(201).json(newMovie);
     }
 
