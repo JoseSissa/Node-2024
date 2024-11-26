@@ -44,7 +44,13 @@ export class MovieModel {
         );
         return movies;
     }
+
     static async getById({ id }) {
+        const [movie] = await connection.query(`
+            SELECT title, year, director, duration, poster, rate FROM movie 
+            WHERE BIN_TO_UUID(id) = ?;`, [id]
+        );        
+        return movie;
     }
 
     static async create({ input }) {
