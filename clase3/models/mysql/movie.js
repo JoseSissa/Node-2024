@@ -23,8 +23,10 @@ export class MovieModel {
 
             // Get all movie from movie_genre table
             const [moviesFromGenre] = await connection.query(`
-                SELECT BIN_TO_UUID(movie_id) movie_id FROM movie_genre
-                WHERE genre_id = ?;`, [idGenre[0].id]
+                SELECT BIN_TO_UUID(movie_id) movie_id 
+                FROM movie_genre
+                WHERE genre_id = ?;`,
+                [idGenre[0].id]
             );
             if(moviesFromGenre.length === 0) return [];
 
@@ -39,9 +41,26 @@ export class MovieModel {
             const moviesFiltered = await Promise.all(promises);
             return moviesFiltered;
         }
+
         const [movies] = await connection.query(
             'SELECT title, year, director, duration, poster, rate, BIN_TO_UUID(id) id FROM movie'
         );
+
+        const promises = movies.map(async (movie) => {
+            const genres = await connection.query(`
+                SELECT BIN_TO_UUID(movie_id) movie_id, genre_id, name 
+                FROM movie_genre
+                INNER JOIN genre ON genre_id = genre.id
+                WHERE BIN_TO_UUID(movie_id) = ?;`,
+                [movie.id]
+            );
+            // console.log(genres[0]);
+            movie.genre = genres[0].map((genre) => genre.name);
+            return movie;
+        })
+
+        await Promise.all(promises);
+
         return movies;
     }
 
@@ -56,7 +75,7 @@ export class MovieModel {
     }
 
     static async create({ input }) {
-        const { title, year, director, duration, poster, rate } = input;
+        const { title, year, director, duration, poster, genre, rate } = input;
         const [uuidResult] = await connection.query(`SELECT UUID() uuid;`);
         const [{ uuid }] = uuidResult;
 
@@ -77,8 +96,43 @@ export class MovieModel {
     }
 
     static async delete({ id }) {
+        const [movie] = await connection.query(`
+            SELECT title, year, director, duration, poster, rate FROM movie 
+            WHERE BIN_TO_UUID(id) = ?;`,
+            [id]
+        );
+        await connection.query(`
+            DELETE FROM movie WHERE BIN_TO_UUID(id) = ?;`,
+            [id]
+        );
+        return movie;
     }
 
     static async update({ id, result }) {
+        console.log(id);        
+        console.log(result.data);
+        let setSentence = '';
+        let valuesSentence = [];
+        Object.keys(result.data).forEach((keyData, i) => {
+            if(i == Object.keys(result.data).length - 1) {
+                setSentence += `${keyData} = ?`;
+                valuesSentence.push(result.data[keyData]);
+                valuesSentence.push(id);
+                return;
+            }
+            setSentence += `${keyData} = ?, `;
+            valuesSentence.push(result.data[keyData]);
+        })       
+        
+        const resultSQL = await connection.query(`
+            UPDATE movie
+            SET ${setSentence}
+            WHERE BIN_TO_UUID(id) = ?;`,
+            valuesSentence
+
+        );
+
+        console.log(resultSQL);
+        
     }
 }

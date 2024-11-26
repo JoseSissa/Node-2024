@@ -26,13 +26,14 @@ Content-Type: application/json
 }
 
 ### Actualizar una pelicula (pero sólo una parte de ella)
-PATCH http://localhost:3000/movies/6a360a18-c645-4b47-9a7b-2a71babbf3e0
+PATCH http://localhost:3000/movies/072dee7d-ac39-11ef-b2f4-d89ef342e8b0
 Content-Type: application/json
 
 {
-    "year": 2021
+    "year": 2000,
+    "duration": 200
 }
 
 ### Borrar una pelicula pasando su id
-DELETE http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+DELETE http://localhost:3000/movies/326246b5-ac14-11ef-b2f4-d89ef342e8b0
 Content-Type: application/json
