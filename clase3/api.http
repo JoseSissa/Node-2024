@@ -5,22 +5,23 @@ GET http://localhost:3000/movies
 GET http://localhost:3000/movies?genre=fantasy
 
 ### Recuperamos una pelicula por id
-GET http://localhost:3000/movies/40d77fd6-ac08-11ef-b2f4-d89ef342e8b0
+GET http://localhost:3000/movies/deb36d42-ac50-11ef-b2f4-d89ef342e8b0
 
 ### Crear una pelicula
 POST http://localhost:3000/movies
 Content-Type: application/json
 
 {
-    "sql": "SELECT * FROM movies",
-    "title": "The godfather",
+    "title": "The godfather test",
     "year": 1975,
     "director": "Francis Ford Coppola",
     "duration": 175,
     "poster": "https://i.ebayimg.com/images/g/4goAAOSwMyBe7hnQ/s-l1200.webp",
     "genre": [
         "Crime",
-        "Drama"
+        "Drama",
+        "Action",
+        "Adventure"
     ],
     "rate": 5.0
 }

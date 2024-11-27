@@ -54,7 +54,6 @@ export class MovieModel {
                 WHERE BIN_TO_UUID(movie_id) = ?;`,
                 [movie.id]
             );
-            // console.log(genres[0]);
             movie.genre = genres[0].map((genre) => genre.name);
             return movie;
         })
@@ -84,12 +83,21 @@ export class MovieModel {
             (UUID_TO_BIN("${uuid}"), ?, ?, ?, ?, ?, ?);`, 
             [ title, year, director, duration, poster, rate ]
         );
-
+        
+        genre.forEach(async (genre) => {
+            await connection.query(`
+                INSERT INTO movie_genre (movie_id, genre_id) VALUES
+                ((UUID_TO_BIN("${uuid}")), (SELECT id FROM genre WHERE name = ?));`,
+                [genre]
+            );
+        })
+        
         const [newMovie] = await connection.query(`
             SELECT title, year, director, duration, poster, rate FROM movie 
             WHERE BIN_TO_UUID(id) = ?;`,
             [uuid]
         );
+        
         
         return newMovie[0];
         

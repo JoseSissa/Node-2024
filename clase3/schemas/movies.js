@@ -11,7 +11,7 @@ const movieSchema = zod.object({
         message: 'Poster must be a valid URL'
     }),
     genre: zod.array(
-        zod.enum(['Action', 'Crime', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Romance', 'Sci-Fi', 'Thriller']),
+        zod.enum(['Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime', 'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror', 'Music', 'Mystery', 'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western']),
         {
             required_error: 'Genre is required',
             invalid_type_error: 'Genre must be an array of strings'
