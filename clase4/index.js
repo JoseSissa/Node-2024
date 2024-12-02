@@ -10,30 +10,33 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.post('/login', (req, res) => {
+// Register
+app.post('/register', async (req, res) => {
     const { username, password } = req.body
-    // console.log(username, password)
-
 
     try {
-        const id = UserRepository.create({ username, password })
+        const id = await UserRepository.create({ username, password })
         res.send({ id })
     } catch (error) {
         // Normalmente no se debería enviar el error al cliente
         res.status(400).send(error.message)
     }
 })
-app.post('/register', (req, res) => {
+
+// Login
+app.post('/login', async (req, res) => {
     const { username, password } = req.body
 
     try {
-        const id = UserRepository.create({ username, password })
-        res.send({ id })
+        const user = await UserRepository.login({ username, password })
+        res.send({ user })
     } catch (error) {
         // Normalmente no se debería enviar el error al cliente
-        res.status(400).send(error.message)
+        res.status(401).send(error.message)
     }
 })
+
+
 app.post('/logout', (req, res) => { })
 
 app.post('/protected', (req, res) => { })
