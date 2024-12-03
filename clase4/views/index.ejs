@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
+<body>
+    <section>
+        <form id="register">
+            <h2>Register</h2>
+            <label for="usernameReg">Username</label>
+            <input type="text" id="usernameReg" name="usernameReg">
+            <label for="passwordReg">Password</label>
+            <input type="passwordReg" id="passwordReg" name="passwordReg">
+            <button type="submit">Login</button>
+        </form>
+    </section>
+    <section>
+        <form id="login">
+            <h2>Login</h2>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+            <button type="submit">Login</button>
+            <span id="loginSpan"></span>
+        </form>
+    </section>
+</body>
+</html>
+
+<script>
+    const register = document.getElementById('register')
+    const login = document.getElementById('login')
+    const loginSpan = document.getElementById('loginSpan')
+
+    register.addEventListener('submit', (event) => {
+        event.preventDefault()
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+    })
+
+    login.addEventListener('submit', (event) => {
+        event.preventDefault()
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+        console.log({ username, password })
+        
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => {
+            if(response.ok) {
+                loginSpan.innerHTML = 'Logged in'
+                loginSpan.style.color = 'green'
+                setTimeout(() => window.location.href = '/protected', 2000)
+            } else {
+                loginSpan.innerHTML = 'Invalid username or password'
+                loginSpan.style.color = 'red'
+            }
+        })
+        .then(data => console.log(data))
+    })
+</script>
