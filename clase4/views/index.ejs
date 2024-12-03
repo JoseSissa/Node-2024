@@ -6,28 +6,39 @@
     <title>Inicio</title>
 </head>
 <body>
-    <section>
-        <form id="register">
-            <h2>Register</h2>
-            <label for="usernameReg">Username</label>
-            <input type="text" id="usernameReg" name="usernameReg">
-            <label for="passwordReg">Password</label>
-            <input type="passwordReg" id="passwordReg" name="passwordReg">
-            <button type="submit">Register</button>
-            <span id="registerSpan"></span>
-        </form>
-    </section>
-    <section>
-        <form id="login">
-            <h2>Login</h2>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
-            <button type="submit">Login</button>
-            <span id="loginSpan"></span>
-        </form>
-    </section>
+    <main>
+        <% if (username) { %>
+            <section>
+                <h3>
+                    Hola <%= username %>
+                </h3>
+                <span>Estas desde el panel de admin</span>
+                <button id="logout">Cerrar Sesión</button>
+            </section>
+        <% } else { %>
+            <section>
+                <form id="register">
+                    <h2>Register</h2>
+                    <label for="usernameReg">Username</label>
+                    <input type="text" id="usernameReg" name="usernameReg">
+                    <label for="passwordReg">Password</label>
+                    <input type="passwordReg" id="passwordReg" name="passwordReg">
+                    <button type="submit">Register</button>
+                    <span id="registerSpan"></span>
+                </form>
+                <form id="login">
+                    <h2>Login</h2>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password">
+                    <button type="submit">Login</button>
+                    <span id="loginSpan"></span>
+                </form>
+            </section>
+        <% } %>
+    </main>
+
 </body>
 </html>
 
@@ -64,7 +75,6 @@
         event.preventDefault()
         const username = document.getElementById('username').value
         const password = document.getElementById('password').value
-        console.log({ username, password })
         
         fetch('/login', {
             method: 'POST',
