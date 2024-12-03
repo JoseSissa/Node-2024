@@ -13,7 +13,8 @@
             <input type="text" id="usernameReg" name="usernameReg">
             <label for="passwordReg">Password</label>
             <input type="passwordReg" id="passwordReg" name="passwordReg">
-            <button type="submit">Login</button>
+            <button type="submit">Register</button>
+            <span id="registerSpan"></span>
         </form>
     </section>
     <section>
@@ -34,11 +35,12 @@
     const register = document.getElementById('register')
     const login = document.getElementById('login')
     const loginSpan = document.getElementById('loginSpan')
+    const registerSpan = document.getElementById('registerSpan')
 
     register.addEventListener('submit', (event) => {
         event.preventDefault()
-        const username = document.getElementById('username').value
-        const password = document.getElementById('password').value
+        const username = document.getElementById('usernameReg').value
+        const password = document.getElementById('passwordReg').value
         fetch('/register', {
             method: 'POST',
             headers: {
@@ -46,7 +48,15 @@
             },
             body: JSON.stringify({ username, password })
         })
-        .then(response => response.json())
+        .then(response => {
+            if(response.ok) {
+                registerSpan.innerHTML = 'Registered'
+                registerSpan.style.color = 'green'
+            } else {
+                registerSpan.innerHTML = 'Username already exists'
+                registerSpan.style.color = 'red'
+            }
+        })
         .then(data => console.log(data))
     })
 
