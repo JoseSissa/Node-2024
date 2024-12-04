@@ -6,7 +6,36 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Hola <%= username %></h2>
+    <h2>Hola <%= user.username %></h2>
     <h4>Este contenido está protegido</h4>
+    <% if (user) { %>
+        <section>
+            <h3>
+                Hola <%= user.username %>
+            </h3>
+            <span>Estas desde el panel de admin</span>
+            <button id="logout">Cerrar Sesión</button>
+        </section>
+    <% } %>
 </body>
 </html>
+
+<script>
+    const logout = document.getElementById('logout')
+
+    if(logout != null) {
+        logout.addEventListener('click', (event) => {        
+            fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => {
+                console.log(res);
+                window.location.href = '/'
+                
+            })
+        })
+    }
+</script>

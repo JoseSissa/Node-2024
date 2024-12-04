@@ -7,10 +7,10 @@
 </head>
 <body>
     <main>
-        <% if (username) { %>
+        <% if (user) { %>
             <section>
                 <h3>
-                    Hola <%= username %>
+                    Hola <%= user.username %>
                 </h3>
                 <span>Estas desde el panel de admin</span>
                 <button id="logout">Cerrar Sesión</button>
@@ -48,51 +48,55 @@
     const loginSpan = document.getElementById('loginSpan')
     const registerSpan = document.getElementById('registerSpan')
 
-    register.addEventListener('submit', (event) => {
-        event.preventDefault()
-        const username = document.getElementById('usernameReg').value
-        const password = document.getElementById('passwordReg').value
-        fetch('/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
+    if(register != null) {
+        register.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const username = document.getElementById('usernameReg').value
+            const password = document.getElementById('passwordReg').value
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if(response.ok) {
+                    registerSpan.innerHTML = 'Registered'
+                    registerSpan.style.color = 'green'
+                } else {
+                    registerSpan.innerHTML = 'Username already exists'
+                    registerSpan.style.color = 'red'
+                }
+            })
+            .then(data => console.log(data))
         })
-        .then(response => {
-            if(response.ok) {
-                registerSpan.innerHTML = 'Registered'
-                registerSpan.style.color = 'green'
-            } else {
-                registerSpan.innerHTML = 'Username already exists'
-                registerSpan.style.color = 'red'
-            }
-        })
-        .then(data => console.log(data))
-    })
+    }
 
-    login.addEventListener('submit', (event) => {
-        event.preventDefault()
-        const username = document.getElementById('username').value
-        const password = document.getElementById('password').value
-        
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
+    if(login != null) {
+        login.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const username = document.getElementById('username').value
+            const password = document.getElementById('password').value
+            
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if(response.ok) {
+                    loginSpan.innerHTML = 'Logged in'
+                    loginSpan.style.color = 'green'
+                    setTimeout(() => window.location.href = '/protected', 1000)
+                } else {
+                    loginSpan.innerHTML = 'Invalid username or password'
+                    loginSpan.style.color = 'red'
+                }
+            })
+            .then(data => console.log(data))
         })
-        .then(response => {
-            if(response.ok) {
-                loginSpan.innerHTML = 'Logged in'
-                loginSpan.style.color = 'green'
-                setTimeout(() => window.location.href = '/protected', 2000)
-            } else {
-                loginSpan.innerHTML = 'Invalid username or password'
-                loginSpan.style.color = 'red'
-            }
-        })
-        .then(data => console.log(data))
-    })
+    }
 </script>
